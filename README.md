@@ -138,3 +138,7 @@ The project follows a systematic approach:
 1. [Whisper: Automatic Speech Recognition System](https://github.com/openai/whisper)
 2. [SpecAugment for Automatic Speech Recognition](https://ar5iv.labs.arxiv.org/html/1810.04826)
 3. [Audio Deep Learning Made Simple](https://towardsdatascience.com/audio-deep-learning-made-simple-part-2-why-mel-spectrograms-perform-better-aad889a93505)
+
+# To-Be-Added
+1.Demo of the model->so user can record themselve with pauses and missing words and the model prints the voice-to-text
+
