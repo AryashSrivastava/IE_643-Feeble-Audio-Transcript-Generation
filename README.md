@@ -1,28 +1,113 @@
 # Feeble Audio-Based Transcript Generation
-A speech recognition model using OpenAI Whisper that transcribes audio with pause detection.
+A comprehensive project focused on generating text transcriptions from feeble and distorted audio signals with minimal syntax and information loss. Leveraging pre-trained models and advanced noise-handling techniques, this project addresses complex challenges in speech recognition and transcription.
 
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
 
+---
+
+## Team and Guidance
+- **Course**: IE 643
+- **Team Name**: NLPeeps
+- **Team Members**: Aryash Srivastava (22B1506), Dhruv Garg (22B1529)
+- **Guided by**: Prof. Balamurugan  
+- **TA’s**: Mr. Rahul, Mr. Bheeshm
+
+---
+
 ## Table of Contents
-- [About](#about)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Results](#results)
-- [Contributing](#contributing)
-- [License](#license)
+1. [Problem Statement](#problem-statement)
+2. [Workflow](#workflow)
+3. [Proposed Approach](#proposed-approach)
+4. [Dataset and Preprocessing](#dataset-and-preprocessing)
+5. [Experimental Setup](#experimental-setup)
+6. [Experimental Results](#experimental-results)
+7. [Installation](#installation)
+8. [Usage](#usage)
+9. [References](#references)
 
-## About
-This project implements a speech recognition pipeline using OpenAI's Whisper model. 
-It splits audio based on pauses to improve transcription accuracy and handles multiple segments efficiently.
+---
 
-## Features
-- Automatic audio transcription using OpenAI Whisper.
-- Handles pauses to transcribe audio in segments.
-- Customizable silence thresholds for segmentation.
-- Works with diverse audio formats.
+## Problem Statement
+To generate accurate transcriptions from feeble audio recordings with minimal syntax and information loss. This includes handling distorted signals, muting sections, and predicting masked words effectively.
+
+---
+
+## Workflow
+The project follows a systematic approach:
+1. **Initial Theoretical Development**:
+   - Exploration of speech recognition techniques like Hidden Markov Models and n-grams.
+   - Ideation of prediction algorithms.
+
+2. **Shift to Pre-Trained Models**:
+   - Leveraging OpenAI Whisper for transcription.
+
+3. **Distortion Handling**:
+   - Using Gaussian and white noise to simulate real-world distortions.
+
+4. **Muted Section Prediction**:
+   - Employing spectrogram decomposition for silent region detection.
+
+5. **Model Integration**:
+   - Combining all components into a single pipeline.
+
+---
+
+## Proposed Approach
+### Key Components:
+1. **Speech Recognition**:
+   - Shift from custom-built models to pre-trained Whisper for reduced complexity.
+   
+2. **Audio Distortion Generation**:
+   - Adding Gaussian noise and replacing segments with white noise.
+
+3. **Muted Part Prediction**:
+   - Using spectrogram variance to identify muted sections.
+   - Employing a fill-mask model to predict missing words.
+
+---
+
+## Dataset and Preprocessing
+- **Dataset**: Mozilla "Common Voice" dataset.
+- **Preprocessing**:
+  - Clipping audio and adding Gaussian noise (amplitude 0 to 0.02).
+  - Replacing 0.2 to 0.5 seconds of audio with white noise.
+
+---
+
+## Experimental Setup
+1. **Base Models**:
+   - Distortion Generator.
+   - Spectral Differentiator for sentence segmentation.
+   - Predictor for masked sentences.
+
+2. **Final Predictor**:
+   - Integrates all components for end-to-end transcription.
+
+3. **Testing**:
+   - Real-time audio evaluation using a test predictor model.
+
+---
+
+## Experimental Results
+### Dataset Testing:
+- **Input**: Feeble audio with distortions.
+- **Actual Statement**:  
+  `Then I got a hold of some dough and went goofy.`
+- **Predicted Statement**:  
+  `Then got a hold of some joe and went goofy.`
+
+### Real-Time Testing:
+- **Input**: Live recording.  
+- **Predicted Output**: `Sun rises from East.`
+
+---
+
+# Novelty Asessment Additions
+1. Only the first pause is predicted; no further predictions occur-> Improved through Pydub Silence, running the model over next white noise intervals after the 1st interval is processed.
+2. Predictions are occasionally in incorrect languages-> Retraining the model over formatted dataset to make English as the default language
+---
 
 ## Installation
 1. Clone the repository:
@@ -34,8 +119,10 @@ It splits audio based on pauses to improve transcription accuracy and handles mu
     ```bash
     pip install -r requirements.txt
     ```
-3. Ensure `ffmpeg` is installed for `pydub`:
+3. Install `ffmpeg` for audio processing:
     - [FFmpeg Installation Guide](https://ffmpeg.org/download.html)
+
+---
 
 ## Usage
 1. Prepare your audio files.
@@ -43,12 +130,11 @@ It splits audio based on pauses to improve transcription accuracy and handles mu
     ```bash
     python speechrecognition.py --input example_audio.mp3
     ```
-3. Customize silence parameters in the script if needed.
-4. View the transcription in the output file.
+3. Customize silence thresholds and noise parameters in the script if needed.
 
-## Results
-### Example Audio-to-Text Transcription
-Original Audio:
-![Audio Waveform](https://via.placeholder.com/400x150)
+---
 
-Transcription Output:
+## References
+1. [Whisper: Automatic Speech Recognition System](https://github.com/openai/whisper)
+2. [SpecAugment for Automatic Speech Recognition](https://ar5iv.labs.arxiv.org/html/1810.04826)
+3. [Audio Deep Learning Made Simple](https://towardsdatascience.com/audio-deep-learning-made-simple-part-2-why-mel-spectrograms-perform-better-aad889a93505)
